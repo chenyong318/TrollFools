@@ -176,6 +176,10 @@ struct EjectListView: View {
                     paddedHeaderFooterText(NSLocalizedString("Some plug-ins were not injected by TrollFools, please eject them with caution.", comment: ""))
                 }
             }
+            
+            Section {
+                launchAppButton
+            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(NSLocalizedString("Plug-Ins", comment: ""))
@@ -273,6 +277,21 @@ struct EjectListView: View {
             }
         }
     }
+    
+    var launchAppButton: some View {
+        Button {
+            launchApp()
+        } label: {
+            launchAppButtonLabel
+        }
+    }
+
+    var launchAppButtonLabel: some View {
+        HStack {
+            Label(NSLocalizedString("Launch", comment: ""), systemImage: "command")
+            Spacer()
+        }
+    }
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -313,6 +332,10 @@ struct EjectListView: View {
                 .disabled(ejectList.injectedPlugIns.isEmpty)
             }
         }
+    }
+    
+    private func launchApp() {
+        LSApplicationWorkspace.default().openApplication(withBundleID: ejectList.app.bid)
     }
 
     @ViewBuilder

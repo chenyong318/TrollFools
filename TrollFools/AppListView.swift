@@ -26,9 +26,11 @@ struct AppListView: View {
     @State var temporaryOpenedURL: URLIdentifiable? = nil
 
     @State var latestVersionString: String?
+    
+    @State var hasSetDefaultScope = false
 
     @AppStorage("isAdvertisementHiddenV2")
-    var isAdvertisementHidden: Bool = false
+    var isAdvertisementHidden: Bool = true
 
     @AppStorage("isWarningHidden")
     var isWarningHidden: Bool = false
@@ -123,8 +125,14 @@ struct AppListView: View {
                 selectorOpenedURL = urlIdent
             }
             .onAppear {
+                if !hasSetDefaultScope {
+                    appList.activeScope = .user
+                    searchViewModel.searchScopeIndex = Scope.user.rawValue
+                    hasSetDefaultScope = true
+                }
+                
                 if Double.random(in: 0 ..< 1) < 0.1 {
-                    isAdvertisementHidden = false
+                    isAdvertisementHidden = true
                 }
 
                 CheckUpdateManager.shared.checkUpdateIfNeeded { latestVersion, _ in
