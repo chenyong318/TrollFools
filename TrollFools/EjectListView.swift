@@ -176,6 +176,10 @@ struct EjectListView: View {
                     paddedHeaderFooterText(NSLocalizedString("Some plug-ins were not injected by TrollFools, please eject them with caution.", comment: ""))
                 }
             }
+
+            Section {
+                launchAppButton
+            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(NSLocalizedString("Plug-Ins", comment: ""))
