@@ -28,7 +28,7 @@ struct AppListView: View {
     @State var latestVersionString: String?
 
     @AppStorage("isAdvertisementHiddenV2")
-    var isAdvertisementHidden: Bool = false
+    var isAdvertisementHidden: Bool = true
 
     @AppStorage("isWarningHidden")
     var isWarningHidden: Bool = false
@@ -124,7 +124,7 @@ struct AppListView: View {
             }
             .onAppear {
                 if Double.random(in: 0 ..< 1) < 0.1 {
-                    isAdvertisementHidden = false
+                    isAdvertisementHidden = true
                 }
 
                 CheckUpdateManager.shared.checkUpdateIfNeeded { latestVersion, _ in
